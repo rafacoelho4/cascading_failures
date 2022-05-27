@@ -1,0 +1,7 @@
+{
+  "python.linting.pylintEnabled": true,
+  "python.linting.enabled": true,
+  "python.formatting.provider": "yapf",
+  // "python.linting.pylintArgs": ["--disable={c0103}", "--disable={c0114}", "--disable={c0115}", "--disable={c0116}"],
+  "python.linting.pylintArgs": ["--errors-only"]
+}
