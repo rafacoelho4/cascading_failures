@@ -40,7 +40,7 @@ def plotGraph(mg, node_color):
                         proj_angle=7)
 
     custom_edge_color = [COLORS["nodes"][(mg[a][b]['weight'] - 1) % len(COLORS["nodes"])] for a,b in mg.edges()]
-    mx.draw_networkx(mg,pos=pos, ax=ax2, node_size=250, with_labels=True, node_color=node_color, 
+    mx.draw_networkx(mg,pos=pos, ax=ax2, node_size=FIGURE["node_size"], with_labels=FIGURE["with_labels"], node_color=node_color, 
                     edge_color=custom_edge_color,
                     edge_cmap=plt.cm.jet_r)
 
@@ -73,7 +73,7 @@ def save(mg, node_color, filename):
                         proj_angle=7)
 
     custom_edge_color = [COLORS["nodes"][(mg[a][b]['weight'] - 1) % len(COLORS["nodes"])] for a,b in mg.edges()]
-    mx.draw_networkx(mg,pos=pos, ax=ax2, node_size=250, with_labels=True, node_color=node_color, 
+    mx.draw_networkx(mg,pos=pos, ax=ax2, node_size=FIGURE["node_size"], with_labels=FIGURE["with_labels"], node_color=node_color, 
                     edge_color=custom_edge_color,
                     edge_cmap=plt.cm.jet_r)
     plt.savefig(filename)

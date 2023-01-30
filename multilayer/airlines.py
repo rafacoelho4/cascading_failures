@@ -1,5 +1,5 @@
 # author: Rafael Coelho Monte Alto
-# advisor: Prof. Dr. Vander Luis 
+# advisor: Prof. Dr. Vander Freitas  
 # 2022/2023
 
 # Appling cascading failures to real networks
@@ -19,11 +19,12 @@ def readAirports(filename):
             a = Airport(id, icao, longitude, latitude)
             airports.append(a)
         # for i in airports:
-        #     i.print()
+            # i.print()
     return airports
 
 def readAirline(filename):
     airline = []
+    active = []
     with open(filename, 'r') as f:
         s = f.readline()
         active_nodes = int(s)
@@ -35,10 +36,12 @@ def readAirline(filename):
                 break
             split = s.split()
             it = int(split[1])
+            active.append(int(split[0]))
             for j in range(it):
                 tupla = (split[0], split[j+2])
                 airline.append(tupla)
-    return airline
+    # print(active)
+    return airline, active
 
 class Airport:
     def __init__(self, id, icao, longitude, latitude):
@@ -54,7 +57,7 @@ class Airport:
         for a in array: 
             a.print()
 
-from create import createGraph
+from create import createGraph, createAir
 from plot import plotGraph
 
 def main():
@@ -62,11 +65,17 @@ def main():
     airports = readAirports(filename)
     filenames = ['input/air-france.txt', 'input/british.txt', 'input/lufthansa.txt']
     layers = []
+    active_airports = []
     for i in filenames:
-        a = readAirline(i)
+        a, b = readAirline(i)
         layers.append(a)
-    
-    mg, node_color = createGraph(len(layers), 450, 3)
+        active_airports.append(b)
+
+    # print(active_airports[0][0])
+    # print(type(active_airports[0][0]))
+    matrix = [[]]
+    # mg, node_color = createGraph(len(layers), 450, 3)
+    mg, node_color = createAir(len(layers), 450, active_airports, matrix)
     plotGraph(mg, node_color)
     return 
 

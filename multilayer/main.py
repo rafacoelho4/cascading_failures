@@ -30,8 +30,8 @@ def main():
     mg = failOne(mg, node_color, 1)
     plotGraph(mg, node_color)
 
-    mg = cascade(mg, node_color, phi=0.4)
-    # mg = cascade(mg, node_color, phi=0.36)
+    # mg = cascade(mg, node_color, phi=0.4)
+    mg = cascade(mg, node_color, phi=0.36)
     print("final result")
     printAtt(mg)
     plotGraph(mg, node_color)
