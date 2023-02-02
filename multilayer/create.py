@@ -58,7 +58,7 @@ def createAir(l, n, active, matrix):
     for i in range(l):
         gx = nx.Graph(directed=False)
         gx.add_nodes_from(range(0, n))
-        # gx.add_edges_from(tuple(random.sample(range(0, n), 2)) for _ in range(n+l))
+        gx.add_edges_from(matrix[i])
         # all nodes start in disabled status
         nx.set_node_attributes(gx, "disabled", "status")
         nx.set_node_attributes(gx, "white", "color")
@@ -68,11 +68,8 @@ def createAir(l, n, active, matrix):
             nx.set_node_attributes(gx, {j: "green"}, name="color")
         # adding to array of layers 
         g.append(gx)
-        # print(nx.get_node_attributes(gx, "color"))
+    # adj block defines interlayer edges
     adj_block = mx.lil_matrix(np.zeros((n*l,n*l)))
-    # for i in range(l-1):
-    #     for _ in range(m):
-    #         adj_block[n*i + random.randint(0, n-1), n*(i+1) + random.randint(0, n-1)] = 1
     # mirrroring
     adj_block += adj_block.T
     mg = mx.MultilayerGraph(list_of_layers=g, inter_adjacency_matrix=adj_block)

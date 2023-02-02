@@ -18,8 +18,6 @@ def readAirports(filename):
             latitude = split[3]
             a = Airport(id, icao, longitude, latitude)
             airports.append(a)
-        # for i in airports:
-            # i.print()
     return airports
 
 def readAirline(filename):
@@ -38,17 +36,17 @@ def readAirline(filename):
             it = int(split[1])
             active.append(int(split[0]))
             for j in range(it):
-                tupla = (split[0], split[j+2])
+                tupla = (int(split[0]), int(split[j+2]))
                 airline.append(tupla)
     # print(active)
     return airline, active
 
 class Airport:
     def __init__(self, id, icao, longitude, latitude):
-        self.id = id
+        self.id = int(id)
         self.icao = icao
-        self.longitude = longitude
-        self.latitude = latitude
+        self.longitude = float(longitude)
+        self.latitude = float(latitude)
 
     def print(self):
         print("Airport:", self.id, self.icao, self.longitude, self.latitude)
@@ -57,26 +55,39 @@ class Airport:
         for a in array: 
             a.print()
 
-from create import createGraph, createAir
+from create import createAir
 from plot import plotGraph
+from cascade import cascade 
+from style import FIGURE
 
 def main():
     filename = 'input/airports.txt'
     airports = readAirports(filename)
-    filenames = ['input/air-france.txt', 'input/british.txt', 'input/lufthansa.txt']
-    layers = []
-    active_airports = []
-    for i in filenames:
-        a, b = readAirline(i)
-        layers.append(a)
-        active_airports.append(b)
+    filenames = ['input/air-france.txt', 'input/british.txt', 'input/lufthansa.txt'] 
+    layers = [] 
+    active_airports = [] 
+    for i in filenames: 
+        a, b = readAirline(i) 
+        layers.append(a) 
+        active_airports.append(b) 
+    
+    total_layers = len(layers) 
+    total_nodes = len(airports) 
+    node_size = [] 
+    for i in range(total_layers): 
+        for j in range(total_nodes): 
+            if (j in active_airports[i]): 
+                node_size.append(FIGURE["node_size"]) 
+            else: 
+                node_size.append(0) 
 
-    # print(active_airports[0][0])
-    # print(type(active_airports[0][0]))
-    matrix = [[]]
-    # mg, node_color = createGraph(len(layers), 450, 3)
-    mg, node_color = createAir(len(layers), 450, active_airports, matrix)
-    plotGraph(mg, node_color)
+    custom_pos = {} 
+    for i in range(total_nodes): 
+        custom_pos[i] = [airports[i].latitude, airports[i].longitude/30] 
+
+    mg, node_color = createAir(total_layers, total_nodes, active_airports, layers) 
+    plotGraph(mg, node_color, node_size=node_size, node_position=custom_pos) 
+    mg = cascade(mg, node_color, phi=0.36)
     return 
 
 if __name__ == "__main__":

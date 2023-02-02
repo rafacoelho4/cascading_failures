@@ -14,6 +14,6 @@ FIGURE = {
     "size": (13, 5),
     "title1": "supra adjacency matrix",
     "title2": "regular interconnected network",
-    "node_size": 10,
+    "node_size": 20,
     "with_labels": False
 }
