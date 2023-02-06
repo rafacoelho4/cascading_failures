@@ -84,7 +84,7 @@ def main():
     custom_pos = {} 
     for i in range(total_nodes): 
         custom_pos[i] = [airports[i].latitude, airports[i].longitude/30] 
-
+    
     mg, node_color = createAir(total_layers, total_nodes, active_airports, layers) 
     plotGraph(mg, node_color, node_size=node_size, node_position=custom_pos) 
     mg = cascade(mg, node_color, phi=0.36)
@@ -92,3 +92,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# correr com utilização da funçao de falha em cascata e analisar falha 
+# distribuição (livro cap 8 figura 8.17) 
